@@ -69,7 +69,7 @@
   "tsd": {
     "compilerOptions": {
       "paths": {
-        "marked-highlight": [
+        "marked-highlight-copy": [
           "./src"
         ]
       }
