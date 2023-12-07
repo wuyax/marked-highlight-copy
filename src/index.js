@@ -12,14 +12,14 @@ export function markedHighlight(options) {
   if (typeof options.langPrefix !== 'string') {
     options.langPrefix = 'language-';
   }
-
+  let tempText = []
   return {
     async: !!options.async,
     walkTokens(token) {
       if (token.type !== 'code') {
         return;
       }
-
+      tempText.push(token.text)
       const lang = getLang(token);
 
       if (options.async) {
@@ -39,7 +39,9 @@ export function markedHighlight(options) {
           ? ` class="${options.langPrefix}${escape(lang)}"`
           : '';
         code = code.replace(/\n$/, '');
-        return `<pre><code${classAttr}>${escaped ? code : escape(code, true)}\n</code></pre>`;
+        return `<div class='code-box'><button class='copy-btn' data-clipboard-text="${tempText.shift()}">复制</button><pre><code${classAttr}>${
+          escaped ? code : escape(code, true)
+        }\n</code></pre></div>`;
       }
     }
   };
